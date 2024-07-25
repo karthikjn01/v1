@@ -38,7 +38,6 @@ export default function HoverableText({
         animate(fe, {
 
             y: ["-100%", 0],
-            opacity: [0, 1],
         }, {
             duration: 0.5,
             delay: stagger(0.015),
@@ -98,12 +97,12 @@ export default function HoverableText({
                 window.open(link);
             }}
         >
-            <div ref={first} id='first'>
+            <p ref={first} id='first' className='text-4xl'>
                 {text}
-            </div>
-            <div ref={second} id='second'>
+            </p>
+            <p ref={second} id='second' className='text-4xl'>
                 {text}
-            </div>
+            </p>
         </div>
     </div>
 }
