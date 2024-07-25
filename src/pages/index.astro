@@ -38,7 +38,7 @@ import Wrapper from "../layouts/wrapper.astro";
 			const containerWidth = container.clientWidth;
 			const textWidth = text.clientWidth;
 			//subtract the line height
-			const textHeight = text.getBoundingClientRect().height - 8;
+			const textHeight = text.getBoundingClientRect().height;
 
 			const scale = containerWidth / textWidth;
 			text.style.transform = `scale(${scale})`;
@@ -54,16 +54,37 @@ import Wrapper from "../layouts/wrapper.astro";
 	<div class="chunk flex flex-col jusitfy-center items-center">
 		<div class="text-container">
 			<div class="scaled-text-wrapper">
-				<h1 class="scaled-text whitespace-nowrap font-bold chars">
+				<h1
+					class="scaled-text whitespace-nowrap font-bold chars text-8xl"
+				>
 					KARTHIK NOOLI
 				</h1>
 			</div>
 		</div>
 		<div
-			class="flex flex-row justify-between items-center gap-x-4 w-full px-1 lg:px-4 -mt-3"
+			class="flex flex-row justify-between items-start gap-x-4 w-full px-1 lg:px-4 -mt-3"
 		>
-			<p>20/04/2001 - PRESENT</p>
-			<p>DESIGN ENGINEER / DEVELOPER</p>
+			<p class="D1">20/04/2001 - PRESENT</p>
+			<div class="flex flex-row gap-x-4 h-fit group">
+				<p class="D2">DESIGN ENGINEER / DEVELOPER</p>
+				<div
+					class="w-0.5 min-h-full bg-bone rounded-lg group-hover:opacity-100 transition-all opacity-100 sm:opacity-0"
+				>
+				</div>
+				<p
+					class="group-hover:opacity-100 transition-all opacity-100 sm:opacity-0 uppercase max-w-xl"
+				>
+					A Developer that happens to know how to design. One that
+					doesn't just want to <span
+						class="font-bold hover:text-pink transition-all"
+						>develop</span
+					> designs, but also wants to <span
+						class="font-bold hover:text-blue transition-all"
+						>design</span
+					>
+					them.
+				</p>
+			</div>
 		</div>
 	</div>
 	<div class="flex flex-col gap-y-4 p-1 lg:p-4 fixed bottom-0 left-0">
