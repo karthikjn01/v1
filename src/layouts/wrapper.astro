@@ -1,0 +1,153 @@
+---
+interface Props {
+    class?: string;
+    [x: string]: any;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="bg-stone/75 p-1">
+    <head>
+        <!-- <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} /> -->
+
+        <script>
+            import {
+                animate,
+                stagger,
+                inView,
+            } from "./../components/motion-wrapper";
+            import SplitType from "split-type";
+
+            inView(".chunk", ({ target }) => {
+                const lines = new SplitType(target.querySelectorAll(".lines"))
+                    .lines;
+                const words = new SplitType(target.querySelectorAll(".words"))
+                    .words;
+
+                const chars = new SplitType(target.querySelectorAll(".chars"))
+                    .chars;
+
+                console.log({
+                    lines,
+                    words,
+                    chars,
+                    characters: target.querySelectorAll(".chars"),
+                });
+
+                if (!!words && words.length !== 0) {
+                    console.log("Animating words");
+                    animate(
+                        words,
+                        {
+                            opacity: [0, 1],
+                            y: [-20, 0],
+                        },
+                        {
+                            delay: stagger(0.05),
+                            duration: 0.5,
+                            easing: "ease-in-out",
+                        },
+                    );
+                }
+
+                if (!!chars && chars.length !== 0) {
+                    animate(
+                        chars,
+                        {
+                            y: ["-100%", 0],
+                            rotateX: [180, 0],
+                        },
+                        {
+                            delay: stagger(0.1),
+                            duration: 1,
+                            easing: "ease-in-out",
+                        },
+                    );
+                }
+
+                if (!!lines && lines.length !== 0) {
+                    animate(
+                        lines,
+                        {
+                            opacity: [0, 1],
+                            y: [-20, 0],
+                        },
+                        {
+                            delay: stagger(0.05, {
+                                start: 0.5,
+                            }),
+                            duration: 0.5,
+                            easing: "ease-in-out",
+                        },
+                    );
+                }
+
+                const D1 = target.querySelectorAll(".D1");
+                const D2 = target.querySelectorAll(".D2");
+                const D3 = target.querySelectorAll(".D3");
+
+                console.log({ D1, D2, D3 });
+
+                if (D1 !== null && D1.length !== 0) {
+                    animate(
+                        D1,
+                        {
+                            opacity: [0, 1],
+                            y: [20, 0],
+                        },
+                        {
+                            delay: stagger(0.05),
+                            duration: 0.5,
+                            easing: "ease-in-out",
+                        },
+                    );
+                }
+
+                if (D2 !== null && D2.length !== 0) {
+                    animate(
+                        D2,
+                        {
+                            opacity: [0, 1],
+                            y: [20, 0],
+                        },
+                        {
+                            delay: stagger(0.05, {
+                                start: 0.5,
+                            }),
+                            duration: 0.5,
+                            easing: "ease-in-out",
+                        },
+                    );
+                }
+
+                if (D3 !== null && D3.length !== 0) {
+                    animate(
+                        D3,
+                        {
+                            opacity: [0, 1],
+                            y: [20, 0],
+                        },
+                        {
+                            delay: stagger(0.05, {
+                                start: 1,
+                            }),
+                            duration: 0.5,
+                            easing: "ease-in-out",
+                        },
+                    );
+                }
+            });
+        </script>
+    </head>
+    <body
+        class={`w-[calc(100vw-8px)] h-[calc(100vh-8px)] overflow-clip bg-stone text-bone rounded-lg ${Astro.props.class}`}
+    >
+        <div class="">
+            <main>
+                <slot />
+            </main>
+        </div>
+    </body>
+</html>

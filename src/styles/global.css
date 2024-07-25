@@ -1,0 +1,6 @@
+/* Register your custom font family and tell the browser where to find it. */
+@font-face {
+	font-family: 'Trap';
+	src: url('/fonts/Trap') format('ttf');
+	font-display: swap;
+}

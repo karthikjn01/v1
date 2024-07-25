@@ -1,0 +1,44 @@
+---
+interface Props {
+    class?: string;
+    text: string;
+    [x: string]: any;
+}
+
+const { text } = Astro.props as Props;
+---
+
+<script define:vars={{ text }} is:inline type="module">
+    import * as SplitType from "./split-type/lib";
+
+    if (typeof window !== "undefined") {
+        function init() {
+            // Use dataset to access uniqueId
+            const outer = document.querySelector(`#outer-${text}`);
+            const first = outer.querySelector(`#first-${text}`);
+            const second = outer.querySelector(`#second-${text}`);
+
+            const firstChars = new SplitType(first).chars;
+            const secondChars = new SplitType(second).chars;
+
+            console.log({ firstChars, secondChars });
+
+            // Ensure heights match, etc.
+            outer.style.height = `${first.clientHeight}px`;
+
+            console.log({ text });
+        }
+
+        window.addEventListener("resize", init);
+        window.addEventListener("load", init);
+    }
+</script>
+
+<div
+    class="flex flex-col overflow-clip hover:justify-end text-5xl"
+    id={`outer-${text}`}
+    data-text={text}
+>
+    <div id={`first-${text}`}>{text}</div>
+    <div id={`second-${text}`}>{text}</div>
+</div>

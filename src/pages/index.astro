@@ -1,0 +1,90 @@
+---
+import H1 from "../components/ui/h1.astro";
+import HoverableText from "../components/HoverableText.tsx";
+import Wrapper from "../layouts/wrapper.astro";
+---
+
+<style>
+	.text-container {
+		width: 100%;
+		display: flex;
+		height: fit-content;
+		align-items: start;
+		justify-content: start;
+		overflow: hidden;
+	}
+
+	.scaled-text-wrapper {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.scaled-text {
+		white-space: nowrap;
+		display: inline-block;
+		transform: scale(1);
+	}
+</style>
+
+<script is:inline>
+	if (typeof window !== "undefined") {
+		function scaleText() {
+			const container = document.querySelector(".scaled-text-wrapper");
+			const text = document.querySelector(".scaled-text");
+			const containerWidth = container.clientWidth;
+			const textWidth = text.clientWidth;
+			//subtract the line height
+			const textHeight = text.getBoundingClientRect().height - 8;
+
+			const scale = containerWidth / textWidth;
+			text.style.transform = `scale(${scale})`;
+			container.style.height = `${textHeight * scale}px`;
+			console.log(`${textHeight}`, `${textHeight * scale}px`);
+		}
+
+		window.addEventListener("resize", scaleText);
+		window.addEventListener("load", scaleText);
+	}
+</script>
+<Wrapper>
+	<div class="chunk flex flex-col jusitfy-center items-center">
+		<div class="text-container">
+			<div class="scaled-text-wrapper">
+				<h1 class="scaled-text whitespace-nowrap font-bold chars">
+					KARTHIK NOOLI
+				</h1>
+			</div>
+		</div>
+		<div
+			class="flex flex-row justify-between items-center gap-x-4 w-full px-1 lg:px-4 -mt-3"
+		>
+			<p>20/04/2001 - PRESENT</p>
+			<p>DESIGN ENGINEER / DEVELOPER</p>
+		</div>
+	</div>
+	<div class="flex flex-col gap-y-4 p-1 lg:p-4 fixed bottom-0 left-0">
+		<HoverableText
+			text="PROJECTS"
+			client:load
+			link="projects"
+			className="text-4xl"
+		/>
+		<HoverableText
+			text="PICTURES"
+			client:load
+			link="pictures"
+			className="text-4xl"
+		/>
+		<HoverableText text="CV" client:load link="cv" className="text-4xl" />
+		<HoverableText
+			text="DESIGNS"
+			client:load
+			link="designs"
+			className="text-4xl"
+		/>
+	</div>
+</Wrapper>
