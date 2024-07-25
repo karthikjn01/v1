@@ -1,5 +1,6 @@
-import { useAnimate } from 'framer-motion';
+import { stagger, useAnimate } from 'framer-motion';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import SplitType from 'split-type';
 
 export default function FullWidthText({
     text,
@@ -55,6 +56,26 @@ export default function FullWidthText({
         tc.current,
         windowWidth
     ]);
+
+    useEffect(() => {
+        //split the text into characters and then animate them
+
+        if (!tc.current) return;
+
+        const chars = new SplitType(tc.current).chars;
+
+        if (!chars) return;
+
+        animate(chars, {
+            y: ["-100%", 0],
+            rotateX: [90, 0],
+        }, {
+            duration: 0.8,
+            ease: 'easeOut',
+            delay: stagger(0.08),
+        });
+
+    }, []);
 
 
     return <div ref={scope} className="w-full">

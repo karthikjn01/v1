@@ -86,7 +86,7 @@ export default function HoverableText({
     }, [hovering])
 
     return <div ref={scope} className={className ?? ""}>
-        <div ref={outer} className='overflow-clip' onMouseEnter={() => {
+        <div ref={outer} className='overflow-clip cursor-pointer' onMouseEnter={() => {
             setHovering(true);
         }}
             onMouseLeave={() => {
