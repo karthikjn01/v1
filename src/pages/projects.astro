@@ -1,0 +1,73 @@
+---
+import H1 from "../components/ui/h1.astro";
+import HoverableText from "../components/HoverableText.tsx";
+import Wrapper from "../layouts/wrapper.astro";
+import FullWidthText from "../components/FullWidthText.tsx";
+import { fade } from "astro/virtual-modules/transitions.js";
+import { getCollection } from "astro:content";
+
+//paginate the projects into 20 per page
+const currentPage = Number.parseInt(Astro.params.page ?? "0") ?? 0;
+const projects = await getCollection("projects").then((collection) =>
+    collection.sort(
+        (a, b) =>
+            a.data.to.valueOf() - (b.data.to.valueOf() ?? new Date().valueOf()),
+    ),
+);
+
+const start = currentPage * 20;
+const end = start + 20;
+
+const slicedProjects = projects.slice(start, end);
+console.log({ slicedProjects });
+---
+
+<script is:inline>
+    function navigateToProject(slug) {
+        window.open(`/projects/${slug}`, "_self");
+    }
+</script>
+
+<Wrapper transition:animate={fade({ duration: "5s" })}>
+    <div class="chunk flex flex-col jusitfy-center items-center">
+        <FullWidthText text="PROJECTS" client:only transition:name="projects" />
+        <div
+            class="gap-4 flex flex-col md:flex-row justify-end items-start gap-x-4 w-full px-1 lg:px-4 -mt-6"
+        >
+            <div class="flex flex-row gap-x-4 h-fit justify-end">
+                <p class="D1">PROJECTS = [PERSONAL | JOBS | CONTRACTING]</p>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-y-4 p-4 fixed bottom-0 left-0">
+        <HoverableText text="HOME" client:load link="/" className="text-4xl" />
+    </div>
+    <div class="flex flex-col items-center h-full">
+        <div class="flex flex-col gap-y-4 p-4 container">
+            {
+                slicedProjects.map((project) => (
+                    <div
+                        class="flex flex-col gap-2 p-4 chunk cursor-pointer"
+                        data-slug={project.slug}
+                        onclick="navigateToProject(this.dataset.slug)"
+                    >
+                        <div class="flex flex-row gap-x-4 h-fit items-center">
+                            <HoverableText
+                                text={project.data.title}
+                                client:load
+                                link={project.slug}
+                                className="text-4xl font-bold uppercase"
+                            />
+                            <p class="D1">
+                                {project.data.from.toLocaleDateString()} -
+                                {project.data.to?.toLocaleDateString() ??
+                                    "Present"}
+                            </p>
+                        </div>
+                        <p class="text-xl D2">{project.data.description}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</Wrapper>

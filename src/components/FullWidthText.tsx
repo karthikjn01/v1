@@ -44,7 +44,6 @@ export default function FullWidthText({
         //subtract the line height
         const textHeight = textContent.getBoundingClientRect().height;
 
-        console.log({ textHeight, containerWidth, textWidth })
 
         const scale = containerWidth / textWidth;
         scaleContainer.style.transform = `scale(${scale})`;
@@ -73,6 +72,23 @@ export default function FullWidthText({
             duration: 0.8,
             ease: 'easeOut',
             delay: stagger(0.08),
+        });
+
+        document.addEventListener('astro:before-swap', ev => {
+            console.log('before-swap', ev);
+            const {
+                then
+            } = animate(chars, {
+                y: "-100%",
+            }, {
+                duration: 0.8,
+                ease: 'easeOut',
+                delay: stagger(0.08),
+            });
+
+            then(() => {
+                ev.swap();
+            });
         });
 
     }, []);

@@ -3,6 +3,8 @@ import SplitType from 'split-type';
 // import { animate, stagger } from 'motion';
 import { stagger, useAnimate } from 'framer-motion';
 
+import { navigate } from 'astro:transitions/client';
+
 
 export default function HoverableText({
     text,
@@ -21,10 +23,8 @@ export default function HoverableText({
 
     const [hovering, setHovering] = useState<boolean | null>(null);
 
-    console.log({ o: outer.current, f: first.current, s: second.current })
 
     useEffect(() => {
-        console.log({ o: outer.current, f: first.current, s: second.current })
         if (!outer.current || !first.current || !second.current) return;
 
         new SplitType(scope.current.querySelector("#second")).chars;
@@ -32,7 +32,6 @@ export default function HoverableText({
         const fe = scope.current.querySelectorAll("#first .char");
 
 
-        console.log({ hovering })
 
         outer.current.style.height = `${first.current.clientHeight}px`;
         animate(fe, {
@@ -83,6 +82,17 @@ export default function HoverableText({
             });
         }
 
+
+        document.addEventListener('astro:before-preparation', ev => {
+            console.log('before-swap', ev);
+            animate(fe, {
+                y: "-100%",
+            }, {
+                duration: 0.5,
+                delay: stagger(0.01),
+            });
+        });
+
     }, [hovering])
 
     return <div ref={scope} className={className ?? ""}>
@@ -94,7 +104,7 @@ export default function HoverableText({
             }}
             onClick={() => {
                 //send the user to the `link`
-                window.open(link);
+                navigate(link);
             }}
         >
             <p ref={first} id='first' className='text-4xl'>

@@ -1,57 +1,11 @@
 ---
-import H1 from "../components/ui/h1.astro";
+import { fade, slide } from "astro:transitions";
+import FullWidthText from "../components/FullWidthText.tsx";
 import HoverableText from "../components/HoverableText.tsx";
 import Wrapper from "../layouts/wrapper.astro";
-import FullWidthText from "../components/FullWidthText.tsx";
 ---
 
-<style>
-	.text-container {
-		width: 100%;
-		display: flex;
-		height: fit-content;
-		align-items: start;
-		justify-content: start;
-		overflow: hidden;
-	}
-
-	.scaled-text-wrapper {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-	}
-
-	.scaled-text {
-		white-space: nowrap;
-		display: inline-block;
-		transform: scale(1);
-	}
-</style>
-
-<script is:inline>
-	// if (typeof window !== "undefined") {
-	// 	function scaleText() {
-	// 		const container = document.querySelector(".scaled-text-wrapper");
-	// 		const text = document.querySelector(".scaled-text");
-	// 		const containerWidth = container.clientWidth;
-	// 		const textWidth = text.clientWidth;
-	// 		//subtract the line height
-	// 		const textHeight = text.getBoundingClientRect().height;
-
-	// 		const scale = containerWidth / textWidth;
-	// 		text.style.textSize = `${scale}px`;
-	// 		container.style.height = `${textHeight * scale}px`;
-	// 		console.log(`${textHeight}`, `${textWidth}`, `${scale}`);
-	// 	}
-
-	// 	window.addEventListener("resize", scaleText);
-	// 	window.addEventListener("load", scaleText);
-	// }
-</script>
-<Wrapper>
+<Wrapper transition:animate={fade({ duration: "5s" })}>
 	<div class="chunk flex flex-col jusitfy-center items-center">
 		<FullWidthText text="KARTHIK NOOLI" client:only />
 		<div
@@ -88,6 +42,7 @@ import FullWidthText from "../components/FullWidthText.tsx";
 			client:load
 			link="projects"
 			className="text-xl md:text-4xl"
+			transition:name="projects"
 		/>
 		<HoverableText
 			text="PICTURES"

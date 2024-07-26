@@ -21,12 +21,8 @@ const { text } = Astro.props as Props;
             const firstChars = new SplitType(first).chars;
             const secondChars = new SplitType(second).chars;
 
-            console.log({ firstChars, secondChars });
-
             // Ensure heights match, etc.
             outer.style.height = `${first.clientHeight}px`;
-
-            console.log({ text });
         }
 
         window.addEventListener("resize", init);
