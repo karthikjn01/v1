@@ -1,0 +1,36 @@
+---
+import { getEntryBySlug, getCollection } from "astro:content";
+import Wrapper from "../../layouts/wrapper.astro";
+import Prose from "../../components/Prose.astro";
+import HoverableText from "../../components/HoverableText";
+const { slug } = Astro.params;
+const entry = await getEntryBySlug("projects", slug as string);
+
+if (!entry) {
+    return Astro.redirect("/projects");
+}
+
+const { Content, headings } = await entry.render();
+
+export async function getStaticPaths() {
+    const projects = await getCollection("projects");
+    return projects.map((project) => ({
+        params: { slug: project.slug },
+    }));
+}
+---
+
+<Wrapper>
+    <div
+        class="flex flex-col gap-y-4 p-4 fixed bottom-0 left-0 bg-stone rounded-md m-1"
+    >
+        <HoverableText text="HOME" client:load link="/" className="text-4xl" />
+    </div>
+    <div class="flex flex-col items-center h-full w-full overflow-y-auto">
+        <div class="flex flex-col gap-y-4 p-4 container w-full items-stretch">
+            <Prose>
+                <Content />
+            </Prose>
+        </div>
+    </div>
+</Wrapper>

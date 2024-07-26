@@ -40,7 +40,9 @@ console.log({ slicedProjects });
             </div>
         </div>
     </div>
-    <div class="flex flex-col gap-y-4 p-4 fixed bottom-0 left-0">
+    <div
+        class="flex flex-col gap-y-4 p-4 fixed bottom-0 left-0 bg-stone rounded-md m-1 z-50"
+    >
         <HoverableText text="HOME" client:load link="/" className="text-4xl" />
     </div>
     <div class="flex flex-col items-center h-full">
@@ -56,7 +58,7 @@ console.log({ slicedProjects });
                             <HoverableText
                                 text={project.data.title}
                                 client:load
-                                link={project.slug}
+                                link={`/projects/${project.slug}`}
                                 className="text-4xl font-bold uppercase"
                             />
                             <p class="D1">
