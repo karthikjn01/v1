@@ -96,8 +96,8 @@ export default function FullWidthText({
 
     return <div ref={scope} className="w-full">
         <div className={"w-full " + className} ref={oc}>
-            <div ref={sc} className='flex flex-col justify-center items-center'>
-                <p ref={tc} className='w-fit font-bold text-8xl whitespace-nowrap p-2'>{text}</p>
+            <div ref={sc} className='flex flex-col justify-center items-center p-2'>
+                <p ref={tc} className='w-fit font-bold whitespace-nowrap text-8xl'>{text}</p>
             </div>
         </div>
     </div>
