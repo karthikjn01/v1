@@ -11,7 +11,8 @@ const currentPage = Number.parseInt(Astro.params.page ?? "0") ?? 0;
 const projects = await getCollection("projects").then((collection) =>
     collection.sort(
         (a, b) =>
-            a.data.to.valueOf() - (b.data.to.valueOf() ?? new Date().valueOf()),
+            (a.data.to?.valueOf() ?? new Date().valueOf()) -
+            (b.data.to?.valueOf() ?? new Date().valueOf()),
     ),
 );
 
