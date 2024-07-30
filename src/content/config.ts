@@ -22,7 +22,23 @@ const projectCollection = defineCollection({
     }),
 });
 
+const photosCollection = defineCollection({
+    type: 'content',
+    schema: ({ image }) => z.object({
+        title: z.string(),
+        image: z.object({
+            src: image().refine((img) => img.width >= 1080, {
+                message: 'Image must be at least 1080px wide',
+            }),
+            alt: z.string(),
+        }),
+        description: z.string(),
+        date: z.date(),
+    }),
+});
+
 
 export const collections = {
-    'projects': projectCollection
+    'projects': projectCollection,
+    'photos': photosCollection
 };

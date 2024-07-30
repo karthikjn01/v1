@@ -33,7 +33,7 @@ console.log({ slicedProjects });
     <div class="chunk flex flex-col jusitfy-center items-center">
         <FullWidthText text="PROJECTS" client:only transition:name="projects" />
         <div
-            class="gap-4 flex flex-col md:flex-row justify-end items-start gap-x-4 w-full px-1 lg:px-4 -mt-6"
+            class="gap-4 flex flex-col md:flex-row justify-end items-start gap-x-4 w-full px-1 lg:px-4 md:-mt-6"
         >
             <div class="flex flex-row gap-x-4 h-fit justify-end">
                 <p class="D1">PROJECTS = [PERSONAL | JOBS | CONTRACTING]</p>
@@ -46,15 +46,15 @@ console.log({ slicedProjects });
         <HoverableText text="HOME" client:load link="/" className="text-4xl" />
     </div>
     <div class="flex flex-col items-center h-full">
-        <div class="flex flex-col gap-y-4 p-4 container">
+        <div class="flex flex-col gap-y-4 p-2 md:p-4 container">
             {
                 slicedProjects.map((project) => (
                     <div
-                        class="flex flex-col gap-2 p-4 chunk cursor-pointer"
+                        class="flex flex-col gap-2 p-2 md:p-4 chunk cursor-pointer"
                         data-slug={project.slug}
                         onclick="navigateToProject(this.dataset.slug)"
                     >
-                        <div class="flex flex-row gap-x-4 h-fit items-center">
+                        <div class="flex flex-col md:flex-row gap-x-4 h-fit items-stretch md:items-center">
                             <HoverableText
                                 text={project.data.title}
                                 client:load

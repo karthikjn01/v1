@@ -22,3 +22,5 @@ pnpm-debug.log*
 
 .vscode/
 .idea/
+
+./src/content/photos/images/

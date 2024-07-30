@@ -27,7 +27,9 @@ export async function getStaticPaths() {
         <HoverableText text="HOME" client:load link="/" className="text-4xl" />
     </div>
     <div class="flex flex-col items-center h-full w-full overflow-y-auto">
-        <div class="flex flex-col gap-y-4 p-4 container w-full items-stretch">
+        <div
+            class="flex flex-col gap-y-4 p-4 container w-full items-stretch pb-20"
+        >
             <Prose>
                 <Content />
             </Prose>

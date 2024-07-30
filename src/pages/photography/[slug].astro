@@ -1,0 +1,48 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import Wrapper from "../../layouts/wrapper.astro";
+import FullWidthText from "../../components/FullWidthText";
+import HoverableText from "../../components/HoverableText";
+const { slug } = Astro.params;
+const entry = await getEntry("photos", slug as string);
+
+export async function getStaticPaths() {
+    const photos = await getCollection("photos");
+    return photos.map((photo) => ({
+        params: { slug: photo.slug },
+    }));
+}
+
+if (!entry) {
+    return Astro.redirect("/photography");
+}
+
+const img = entry.data.image.src;
+console.log("IMAGE", img);
+---
+
+<Wrapper>
+    <div class="flex flex-col items-center h-full w-full overflow-y-auto">
+        <FullWidthText text={entry.data.title} client:only />
+
+        <div
+            class="flex flex-col gap-y-4 p-4 fixed bottom-0 left-0 bg-stone rounded-md m-1 z-50"
+        >
+            <HoverableText
+                text="HOME"
+                client:load
+                link="/"
+                className="text-4xl"
+            />
+        </div>
+        <div
+            class="flex flex-col gap-y-4 p-2 md:p-4 container w-full items-stretch"
+        >
+            <img src={img.src} alt={entry.data.image.alt} class="rounded-lg" />
+        </div>
+        <div>
+            <p class="text-xs">{entry.data.date.toLocaleDateString()}</p>
+            <p class="">{entry.data.description}</p>
+        </div>
+    </div>
+</Wrapper>

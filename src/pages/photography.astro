@@ -1,0 +1,62 @@
+---
+import { fade } from "astro:transitions";
+import FullWidthText from "../components/FullWidthText";
+import Wrapper from "../layouts/wrapper.astro";
+import HoverableText from "../components/HoverableText";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+
+const photos = await getCollection("photos");
+---
+
+<Wrapper transition:animate={fade({ duration: "5s" })}>
+    <div class="chunk flex flex-col jusitfy-center items-center">
+        <FullWidthText
+            text="PHOTOGRAPHY"
+            client:only
+            transition:name="projects"
+        />
+        <div
+            class="gap-4 flex flex-col md:flex-row justify-end items-start gap-x-4 w-full px-1 lg:px-4 md:-mt-6"
+        >
+            <div class="flex flex-row gap-x-4 h-fit justify-end">
+                <p class="D1">[SONY A7IV | IPHONE 14 PRO]</p>
+            </div>
+        </div>
+    </div>
+    <div
+        class="flex flex-col gap-y-4 p-4 fixed bottom-0 left-0 bg-stone rounded-md m-1 z-50"
+    >
+        <HoverableText text="HOME" client:load link="/" className="text-4xl" />
+    </div>
+    {
+        photos.map((photo) => {
+            console.log(photo);
+            return (
+                <div class="flex flex-col md:flex-row gap-2 p-2 md:p-4 chunk">
+                    <Image
+                        src={photo.data.image.src}
+                        alt={photo.data.image.alt}
+                        width={1080}
+                        height={1080}
+                        class="rounded-lg"
+                    />
+                    <div class="flex flex-col gap-4 h-fit items-stretch">
+                        <div class="flex flex-col gap-2">
+                            <HoverableText
+                                text={photo.data.title}
+                                client:load
+                                link={`/photography/ny1`}
+                                className="text-4xl font-bold uppercase"
+                            />
+                            <p class="D1 text-xs">
+                                {photo.data.date.toLocaleDateString()}
+                            </p>
+                        </div>
+                        <p class="D2">{photo.data.description}</p>
+                    </div>
+                </div>
+            );
+        })
+    }
+</Wrapper>
