@@ -22,7 +22,9 @@ console.log("IMAGE", img);
 ---
 
 <Wrapper>
-    <div class="flex flex-col items-center h-full w-full overflow-y-auto">
+    <div
+        class="flex flex-col items-center h-full w-full overflow-y-auto overflow-x-clip"
+    >
         <FullWidthText text={entry.data.title} client:only />
 
         <div
@@ -38,9 +40,11 @@ console.log("IMAGE", img);
         <div
             class="flex flex-col gap-y-4 p-2 md:p-4 container w-full items-stretch"
         >
-            <img src={img.src} alt={entry.data.image.alt} class="rounded-lg" />
+            <img src={img} alt={entry.data.image.alt} class="rounded-lg" />
         </div>
-        <div>
+        <div
+            class="flex flex-col gap-y-4 p-2 md:p-4 container w-full items-stretch"
+        >
             <p class="text-xs">{entry.data.date.toLocaleDateString()}</p>
             <p class="">{entry.data.description}</p>
         </div>

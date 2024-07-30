@@ -27,9 +27,8 @@ const photosCollection = defineCollection({
     schema: ({ image }) => z.object({
         title: z.string(),
         image: z.object({
-            src: image().refine((img) => img.width >= 1080, {
-                message: 'Image must be at least 1080px wide',
-            }),
+            src: z.string().url(),
+            lil: z.string().url(),
             alt: z.string(),
         }),
         description: z.string(),
