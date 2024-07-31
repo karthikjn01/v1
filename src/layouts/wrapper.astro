@@ -11,7 +11,7 @@ import { ViewTransitions } from "astro:transitions";
 ---
 
 <!doctype html>
-<html lang="en" class="bg-stone/75 p-1">
+<html lang="en" class="bg-stone/25 p-1">
     <head>
         <!-- <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} /> -->
         <ViewTransitions />
@@ -137,7 +137,7 @@ import { ViewTransitions } from "astro:transitions";
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body
-        class={`w-[calc(100vw-8px)] h-[calc(100vh-8px)] overflow-clip bg-stone text-bone rounded-lg ${Astro.props.class ?? ""}`}
+        class={`w-[calc(100vw-8px)] h-[calc(100vh-8px)] overflow-clip bg-bone text-stone rounded-lg ${Astro.props.class ?? ""}`}
     >
         <div class="flex flex-col h-full overflow-y-auto overflow-x-clip">
             <slot />
