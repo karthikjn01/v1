@@ -11,13 +11,15 @@ import Wrapper from "../../layouts/wrapper.astro";
 const category = Astro.params.category;
 
 console.log({ category, sp: Astro.url.searchParams });
-const projects = await getCollection("projects").then((collection) =>
+let projects = await getCollection("projects").then((collection) =>
     collection.sort(
         (a, b) =>
             (a.data.to?.valueOf() ?? new Date().valueOf()) -
             (b.data.to?.valueOf() ?? new Date().valueOf()),
     ),
 );
+
+projects = projects.filter((project) => project.data.draft !== true);
 
 const typedCategory = category as
     | "career"

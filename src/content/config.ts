@@ -12,13 +12,9 @@ const projectCollection = defineCollection({
         from: z.date(),
         to: z.date().optional(),
         hasDetails: z.boolean().default(true),
-        image: z.object({
-            src: z.string(),
-            alt: z.string(),
-        }),
         author: z.string().default('Karthik Nooli'),
         tags: z.array(z.enum(["career", "personal", "design", "achievements"])),
-        canonicalURL: z.string().url(),
+        draft: z.boolean().default(true),
     }),
 });
 
