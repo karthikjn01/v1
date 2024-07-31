@@ -1,0 +1,140 @@
+---
+import { fade } from "astro/virtual-modules/transitions.js";
+import { getCollection } from "astro:content";
+import FullWidthText from "../../components/FullWidthText.tsx";
+import HoverableText from "../../components/HoverableText.tsx";
+import Wrapper from "../../layouts/wrapper.astro";
+
+//paginate the projects into 20 per page
+// const currentPage = Number.parseInt(Astro.params.page ?? "0") ?? 0;
+//get the category from the search params
+const category = Astro.params.category;
+
+console.log({ category, sp: Astro.url.searchParams });
+const projects = await getCollection("projects").then((collection) =>
+    collection.sort(
+        (a, b) =>
+            (a.data.to?.valueOf() ?? new Date().valueOf()) -
+            (b.data.to?.valueOf() ?? new Date().valueOf()),
+    ),
+);
+
+const typedCategory = category as
+    | "career"
+    | "personal"
+    | "design"
+    | "achievements"
+    | undefined;
+
+export async function getStaticPaths() {
+    return [
+        { params: { category: "career" } },
+        { params: { category: "personal" } },
+        { params: { category: "design" } },
+        { params: { category: "achievements" } },
+        { params: { category: undefined } },
+    ];
+}
+
+const filteredProjects = !!typedCategory
+    ? projects.filter((project) => project.data.tags.includes(typedCategory))
+    : projects;
+---
+
+<script is:inline data-astro-rerun>
+    function navigateToProject(slug) {
+        window.open(`/project/${slug}`, "_self");
+    }
+
+    function navigateToFilter(category) {
+        //check if the page is already open if it is then do nothing
+        if (window.location.pathname === `/projects/${category}`) {
+            return;
+        }
+
+        window.open(`/projects/${category}`, "_self");
+    }
+</script>
+
+<Wrapper transition:animate={fade({ duration: "5s" })}>
+    <div class="chunk flex flex-col jusitfy-center items-center">
+        <FullWidthText
+            text={`PROJECTS${typedCategory ? ` | ${typedCategory.toUpperCase()}` : ""}`}
+            client:only
+            transition:name="projects"
+        />
+        <div
+            class="gap-4 flex flex-col md:flex-row justify-end items-start gap-x-4 w-full px-1 lg:px-4 md:-mt-6"
+        >
+            <div class="flex flex-row gap-x-4 h-fit justify-end">
+                <p class="D1">
+                    PROJECTS = [
+                    <span class="cursor-pointer" onclick="navigateToFilter('')">
+                        ALL
+                    </span>|
+                    <span
+                        class="cursor-pointer"
+                        onclick="navigateToFilter('career')"
+                    >
+                        CAREER
+                    </span> |
+                    <span
+                        class="cursor-pointer"
+                        onclick="navigateToFilter('personal')"
+                    >
+                        PERSONAL
+                    </span> |
+                    <span
+                        class="cursor-pointer"
+                        onclick="navigateToFilter('design')"
+                    >
+                        DESIGN
+                    </span> |
+                    <span
+                        class="cursor-pointer"
+                        onclick="navigateToFilter('achievements')"
+                    >
+                        ACHIEVEMENTS
+                    </span>
+                    ]
+                </p>
+            </div>
+        </div>
+    </div>
+    <div
+        class="flex flex-col gap-y-4 p-4 fixed bottom-0 left-0 bg-stone rounded-md m-1 z-50"
+    >
+        <HoverableText text="HOME" client:load link="/" className="text-4xl" />
+    </div>
+    <div class="flex flex-col items-center h-full">
+        <div class="flex flex-col gap-y-4 p-2 md:p-4 container">
+            {
+                filteredProjects.map((project) => (
+                    <div
+                        class="flex flex-col gap-2 p-2 md:p-4 chunk cursor-pointer"
+                        data-slug={project.slug}
+                        onclick="navigateToProject(this.dataset.slug)"
+                    >
+                        <div class="flex flex-col md:flex-row gap-x-4 h-fit items-stretch md:items-center">
+                            <HoverableText
+                                text={project.data.title}
+                                client:load
+                                link={`/project/${project.slug}`}
+                                className="text-4xl font-bold uppercase"
+                            />
+                            <p class="D1">
+                                {project.data.from.toLocaleDateString()} -
+                                {project.data.to?.toLocaleDateString() ??
+                                    "Present"}
+                            </p>
+                            <p class="text-xl D1 uppercase">
+                                [{project.data.tags.join(" | ")}]
+                            </p>
+                        </div>
+                        <p class="text-xl D2">{project.data.description}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</Wrapper>

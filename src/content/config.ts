@@ -17,7 +17,7 @@ const projectCollection = defineCollection({
             alt: z.string(),
         }),
         author: z.string().default('Karthik Nooli'),
-        tags: z.array(z.string()),
+        tags: z.array(z.enum(["career", "personal", "design", "achievements"])),
         canonicalURL: z.string().url(),
     }),
 });
