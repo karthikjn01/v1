@@ -117,7 +117,7 @@ const filteredProjects = !!typedCategory
                         data-slug={project.slug}
                         onclick={`${project.data.hasDetails ? "navigateToProject(this.dataset.slug)" : ""}`}
                     >
-                        <div class="flex flex-col md:flex-row gap-x-4 h-fit items-stretch md:items-center">
+                        <div class="flex flex-col md:flex-row gap-x-4 h-fit items-stretch md:items-center flex-wrap">
                             <HoverableText
                                 text={project.data.title}
                                 client:load
@@ -135,17 +135,24 @@ const filteredProjects = !!typedCategory
                                     ? `${project.data.to?.getMonth() + 1}/${project.data.to?.getFullYear()}`
                                     : "Present"}
                             </p>
-                            <p class="text-xl D1 uppercase">
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-x-4 h-fit items-stretch md:items-center flex-wrap">
+                            {project.data.role && (
+                                <p class="md:text-xl text-sm D2">
+                                    {project.data.role}
+                                </p>
+                            )}
+                            <p class="text-xl D2 uppercase">
                                 [{project.data.tags.join(" | ")}]
                             </p>
                         </div>
-                        <p class="md:text-xl text-sm D2">
+                        <p class="md:text-xl text-sm D3">
                             {project.data.description}
                         </p>
                         {project.data.hasDetails && (
                             <a
                                 href={`/project/${project.slug}`}
-                                class="text-xl D2 underline underline-offset-4"
+                                class="text-sm md:text-xl D3 underline underline-offset-4"
                             >
                                 Read More
                             </a>

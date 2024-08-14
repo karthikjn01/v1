@@ -9,6 +9,7 @@ const projectCollection = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
+        role: z.string().optional(),
         from: z.date(),
         to: z.date().optional(),
         hasDetails: z.boolean().default(true),
