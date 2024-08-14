@@ -108,10 +108,10 @@ export default function HoverableText({
                 navigate(link);
             }}
         >
-            <p ref={first} id='first' className='text-4xl'>
+            <p ref={first} id='first' className='text-xl md:text-4xl'>
                 {text}
             </p>
-            <p ref={second} id='second' className='text-4xl'>
+            <p ref={second} id='second' className='text-xl md:text-4xl'>
                 {text}
             </p>
         </div>

@@ -139,7 +139,9 @@ const filteredProjects = !!typedCategory
                                 [{project.data.tags.join(" | ")}]
                             </p>
                         </div>
-                        <p class="text-xl D2">{project.data.description}</p>
+                        <p class="md:text-xl text-sm D2">
+                            {project.data.description}
+                        </p>
                         {project.data.hasDetails && (
                             <a
                                 href={`/project/${project.slug}`}
