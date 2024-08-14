@@ -12,7 +12,7 @@ export default function HoverableText({
     className
 }: {
     text: string,
-    link: string,
+    link?: string,
     className?: string,
 }) {
     const outer = useRef<HTMLDivElement>(null);
@@ -96,13 +96,14 @@ export default function HoverableText({
     }, [hovering])
 
     return <div ref={scope} className={className ?? ""}>
-        <div ref={outer} className='overflow-clip cursor-pointer' onMouseEnter={() => {
+        <div ref={outer} className={`overflow-clip ${link ? "cursor-pointer" : ""}`} onMouseEnter={() => {
             setHovering(true);
         }}
             onMouseLeave={() => {
                 setHovering(false);
             }}
             onClick={() => {
+                if (!link) return;
                 //send the user to the `link`
                 navigate(link);
             }}

@@ -14,8 +14,8 @@ console.log({ category, sp: Astro.url.searchParams });
 let projects = await getCollection("projects").then((collection) =>
     collection.sort(
         (a, b) =>
-            (a.data.to?.valueOf() ?? new Date().valueOf()) -
-            (b.data.to?.valueOf() ?? new Date().valueOf()),
+            (b.data.to?.valueOf() ?? new Date().valueOf()) -
+            (a.data.to?.valueOf() ?? new Date().valueOf()),
     ),
 );
 
@@ -113,27 +113,41 @@ const filteredProjects = !!typedCategory
             {
                 filteredProjects.map((project) => (
                     <div
-                        class="flex flex-col gap-2 p-2 md:p-4 chunk cursor-pointer"
+                        class={`flex flex-col gap-2 p-2 md:p-4 chunk ${project.data.hasDetails ? "cursor-pointer" : ""}`}
                         data-slug={project.slug}
-                        onclick="navigateToProject(this.dataset.slug)"
+                        onclick={`${project.data.hasDetails ? "navigateToProject(this.dataset.slug)" : ""}`}
                     >
                         <div class="flex flex-col md:flex-row gap-x-4 h-fit items-stretch md:items-center">
                             <HoverableText
                                 text={project.data.title}
                                 client:load
-                                link={`/project/${project.slug}`}
+                                link={
+                                    project.data.hasDetails
+                                        ? `/project/${project.slug}`
+                                        : undefined
+                                }
                                 className="text-4xl font-bold uppercase"
                             />
                             <p class="D1">
-                                {project.data.from.toLocaleDateString()} -
-                                {project.data.to?.toLocaleDateString() ??
-                                    "Present"}
+                                {`${project.data.from.getMonth() + 1}/${project.data.from.getFullYear()}`}{" "}
+                                -{" "}
+                                {project.data.to
+                                    ? `${project.data.to?.getMonth() + 1}/${project.data.to?.getFullYear()}`
+                                    : "Present"}
                             </p>
                             <p class="text-xl D1 uppercase">
                                 [{project.data.tags.join(" | ")}]
                             </p>
                         </div>
                         <p class="text-xl D2">{project.data.description}</p>
+                        {project.data.hasDetails && (
+                            <a
+                                href={`/project/${project.slug}`}
+                                class="text-xl D2 underline underline-offset-4"
+                            >
+                                Read More
+                            </a>
+                        )}
                     </div>
                 ))
             }
