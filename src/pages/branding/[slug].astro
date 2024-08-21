@@ -1,0 +1,50 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import Wrapper from "../../layouts/wrapper.astro";
+import FullWidthText from "../../components/FullWidthText";
+import HoverableText from "../../components/HoverableText";
+
+import Prose from "../../components/Prose.astro";
+const { slug } = Astro.params;
+const entry = await getEntry("branding", slug as string);
+
+export async function getStaticPaths() {
+    const brandings = await getCollection("branding");
+    return brandings.map((branding) => ({
+        params: { slug: branding.slug },
+    }));
+}
+
+if (!entry) {
+    return Astro.redirect("/branding");
+}
+
+const img = entry.data.image.src;
+const { Content, headings } = await entry.render();
+console.log("IMAGE", img);
+---
+
+<Wrapper>
+    <div
+        class="flex flex-col items-center h-full w-full overflow-y-auto overflow-x-clip"
+    >
+        <FullWidthText text={entry.data.title} client:only />
+
+        <div
+            class="flex flex-col gap-y-4 p-4 fixed bottom-0 left-0 bg-bone rounded-md m-1 z-50"
+        >
+            <HoverableText
+                text="HOME"
+                client:load
+                link="/"
+                className="text-4xl"
+            />
+        </div>
+
+    <div class="container flex flex-col w-full items-stretch pb-20 mt-10">
+        <Prose>
+            <Content />
+        </Prose>
+    </div>
+    </div>
+    </Wrapper>

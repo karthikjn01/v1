@@ -47,7 +47,7 @@ const photos = await getCollection("photos");
                                 <HoverableText
                                     text={photo.data.title}
                                     client:load
-                                    link={`/photography/ny1`}
+                                    link={`/photography/${photo.slug}`}
                                     className="text-4xl font-bold uppercase"
                                 />
                                 <p class="D1 text-xs">
