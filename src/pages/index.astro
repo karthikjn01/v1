@@ -30,7 +30,7 @@ import Wrapper from "../layouts/wrapper.astro";
 			</div>
 		</div>
 	</div>
-	<div class="flex flex-col gap-y-4 p-4 fixed bottom-0 left-0">
+	<div class="flex flex-col gap-y-2 md:gap-y-4 p-4 fixed bottom-0 left-0">
 		<HoverableText
 			text="PROJECTS"
 			client:load
@@ -54,6 +54,40 @@ import Wrapper from "../layouts/wrapper.astro";
 			text="CV"
 			client:load
 			link="https://drive.google.com/file/d/1gVIM-oFDBUT8GHHx6eNYWJpBCpjRDW4d/view?usp=drive_link"
+			className=""
+		/>
+	</div>
+	<div class="flex flex-col gap-y-2 md:gap-y-4 p-4 items-end fixed bottom-0 right-0">
+		<HoverableText
+			text="YOUTUBE"
+			client:load
+			link="https://www.youtube.com/@karthiknooli"
+			className=""
+			transition:name="projects"
+		/>
+		<HoverableText
+			text="INSTA"
+			client:load
+			link="https://www.instagram.com/karthik.nooli/"
+			className=""
+			transition:name="projects"
+		/>
+		<HoverableText
+			text="LINKEDIN"
+			client:load
+			link="https://www.linkedin.com/in/karthiknooli/"
+			className=""
+		/>
+		<HoverableText
+			text="X"
+			client:load
+			link="https://www.x.com/karthikjn01/"
+			className=""
+		/>
+		<HoverableText
+			text="GITHUB"
+			client:load
+			link="https://github.com/karthikjn01"
 			className=""
 		/>
 	</div>
